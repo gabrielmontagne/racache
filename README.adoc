@@ -1,3 +1,5 @@
 = racache
 Gabriel Montagné Láscaris-Comneno <gabriel@tibas.london>
 v0.0.1
+
+Uses https://github.com/DanielSWolf/rhubarb-lip-sync[rhubarb] to spit out a `.dat` moho file (preston blair style) with arbitrary fps.

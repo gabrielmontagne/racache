@@ -1,8 +1,9 @@
+from argcomplete import autocomplete
 from argparse import ArgumentParser
 from collections import OrderedDict
 from csv import DictReader
 from io import StringIO
-from os.path import abspath, isfile
+from os.path import abspath, isfile, splitext
 from shlex import split
 from subprocess import check_output
 
@@ -23,13 +24,14 @@ def main():
     parser.add_argument('input')
     parser.add_argument('-o', default=None)
     parser.add_argument('-fps', default=10, type=float)
+    autocomplete(parser)
     args = parser.parse_args()
     full_path = abspath(args.input)
     assert isfile(full_path), 'Input file cannot be found'
     out = check_output(split(f'rhubarb {full_path}')).decode('utf8')
     fields = DictReader(StringIO(out), dialect='excel-tab', fieldnames=('time', 'viseme'))
     frames = OrderedDict([(round(float(f['time']) * args.fps), alphaToPrestonBlair.get(f['viseme'])) for f in fields])
-    output = args.o or f'{args.input}.dat'
+    output = args.o or f'{splitext(args.input)[0]}.dat'
     with open(output, 'w') as o:
         o.write('OkaLoka\n')
         for f in frames:

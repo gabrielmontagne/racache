@@ -1,4 +1,3 @@
-from argcomplete import autocomplete
 from argparse import ArgumentParser
 from collections import OrderedDict
 from csv import DictReader
@@ -24,7 +23,6 @@ def main():
     parser.add_argument('input')
     parser.add_argument('-o', default=None)
     parser.add_argument('-fps', default=10, type=float)
-    autocomplete(parser)
     args = parser.parse_args()
     full_path = abspath(args.input)
     assert isfile(full_path), 'Input file cannot be found'
